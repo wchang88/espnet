@@ -1,1 +1,0 @@
-../../../cmu_arctic/tts1/local/data_download_all.sh
