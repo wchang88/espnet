@@ -35,7 +35,8 @@ fi
 BASE_DIR=$(pwd)
 
 lang_codes="de el es fi fr hu ja nl ru cmn"
-langs="german greek spanish finnish french hungarian japanese dutch russian chinese"
+# langs="german greek spanish finnish french hungarian japanese dutch russian chinese"
+langs="german"
 
 log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CSS10'
 log "if download fails, please make sure you follow Kaggle's documentation to setup an access token to access the API"
@@ -44,22 +45,21 @@ DOWNLOADS_DIR=downloads/css10
 DATA_DIR=data/css10
 mkdir -p "${DOWNLOADS_DIR}" "${DATA_DIR}"
 
-for lang in "${langs}"; do
-   log_lang=$(echo "$lang" | tr '[:lower:]' '[:upper:]')
+for lang in ${langs}; do
    if [ ! -e "${DOWNLOADS_DIR}"/"${lang}".done ]; then
       # download data
-      log 'Downloading "${log_lang}" speech data...'
+      log Downloading "${lang}" speech data...
       mkdir -p "${DOWNLOADS_DIR}"/"${lang}"
       kaggle datasets download -d bryanpark/"${lang}"-single-speaker-speech-dataset --path "${DOWNLOADS_DIR}"/"${lang}" --unzip
       touch "${DOWNLOADS_DIR}"/"${lang}".done
-      log 'Finished downloading "${log_lang}" speech data'
+      log Finished downloading "${lang}" speech data
    else
-      log '"${log_lang}" speech data already downloaded. Please manually check the "${DOWNLOADS_DIR}"/"${lang}" directory to make sure the data is there'
+      log "${lang}" speech data already downloaded. Please manually check the "${DOWNLOADS_DIR}"/"${lang}" directory to make sure the data is there
    fi
 
-   log 'Preparing "${log_lang}" data files'
-   local/data_prep_css10.py "${DOWNLOADS_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"
-   log 'Finished preparing "${log_lang}" data files in "${DATA_DIR}"/"${lang}"'
+   log Preparing "${lang}" data files
+   python local/data_prep_css10.py "${DOWNLOADS_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"
+   log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
 done
 
 log 'CSS10 DOWNLOAD AND DATA PREPARATION COMPLETED'
@@ -70,7 +70,7 @@ echo 'CSS10="${BASE_DIR}"/"${DOWNLOADS_DIR}"' >> db.sh
 cd "${BASE_DIR}"
 
 log "stage 1: scripts/audio/trim_silence.sh"
-for lang in "${langs}"; do
+for lang in ${langs}; do
    # shellcheck disable=SC2154
    scripts/audio/trim_silence.sh \
       --cmd "${train_cmd}" \
@@ -93,10 +93,10 @@ declare -A g2p_dict=(
    ["finnish"]="espeak_ng_finnish"
    ["french"]="espeak_ng_french"
    ["hungarian"]="espeak_ng_hungarian"
-   ["japanese"]="pyopenjtalk"
+   ["japanese"]="espeak_ng_japanese"
    ["dutch"]="espeak_ng_dutch"
    ["russian"]="espeak_ng_russian"
-   ["chinese"]="pypinyin_g2p_phone"
+   ["chinese"]="espeak_ng_mandarin"
 
 for lang in ${langs}; do
    g2p=${g2p_dict[${lang}]}
