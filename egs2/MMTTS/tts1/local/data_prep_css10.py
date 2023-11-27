@@ -67,7 +67,7 @@ def prepare_data_files(downloads_dir, data_dir):
       os.path.join(data_dir, 'spk2utt'), 'w', encoding="utf-8"
    ) as spk2utt_f:
       for line in transcripts_f:
-         audio_f, transcript, _ = line.strip().split("|")
+         audio_f, _, transcript, _ = line.strip().split("|")
          uttid = dataset + "_" + lang_code + "_" + audio_f.split("/")[-1]
 
          wav_scp_f.write(f"{spkid}-{uttid} {audio_f}\n")
