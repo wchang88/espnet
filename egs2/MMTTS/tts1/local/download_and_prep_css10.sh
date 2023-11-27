@@ -66,7 +66,7 @@ done
 log 'CSS10 DOWNLOAD AND DATA PREPARATION COMPLETED'
 touch downloads/css10.done
 echo "" >> db.sh
-echo 'CSS10="${BASE_DIR}"/"${DOWNLOADS_DIR}"' >> db.sh
+echo CSS10="${BASE_DIR}"/"${DOWNLOADS_DIR}" >> db.sh
 
 cd "${BASE_DIR}"
 
@@ -80,7 +80,7 @@ for lang in ${langs}; do
       --win_length 1024 \
       --shift_length 256 \
       --threshold "${threshold}" \
-      "data/${lang}" "data/${lang}/log"
+      "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"/log
 done
 
 )
@@ -101,39 +101,39 @@ declare -A g2p_dict=(
 
 for lang in ${langs}; do
    g2p=${g2p_dict[${lang}]}
-   utils/copy_data_dir.sh "data/${lang}" "data/${lang}_phn"
+   utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
    pyscripts/utils/convert_text_to_phn.py \
       --g2p "${g2p}" --nj "${nj}" \
-      "data/${lang}/text" "data/${lang}_phn/text"
-   utils/fix_data_dir.sh "data/${lang}_phn"
+      "${DATA_DIR}"/"${lang}"/text "${DATA_DIR}"/"${lang}"_phn/text
+   utils/fix_data_dir.sh "${DATA_DIR}"/"${lang}"_phn
 done
 
-log "stage 3: utils/subset_data_dir.sh"
-train_set=tr_no_dev
-dev_set=dev
-eval_set=eval1
-suffix=""
-if [ "${text_format}" = phn ]; then
-   suffix="_phn"
-fi
-combine_train_dirs=()
-combine_dev_dirs=()
-combine_eval_dirs=()
-for lang in ${langs}; do
-   utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
-   utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
-   utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
-   utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
-   utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
-      "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
-   utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
-   combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
-   combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
-   combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
-done
-utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
-utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
-utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"
+# log "stage 3: utils/subset_data_dir.sh"
+# train_set=tr_no_dev
+# dev_set=dev
+# eval_set=eval1
+# suffix=""
+# if [ "${text_format}" = phn ]; then
+#    suffix="_phn"
+# fi
+# combine_train_dirs=()
+# combine_dev_dirs=()
+# combine_eval_dirs=()
+# for lang in ${langs}; do
+#    utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
+#    utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
+#    utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
+#    utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
+#    utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
+#       "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
+#    utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
+#    combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
+#    combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
+#    combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
+# done
+# utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
+# utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
+# utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"
 
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
