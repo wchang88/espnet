@@ -34,7 +34,7 @@ fi
 
 BASE_DIR=$(pwd)
 
-lang_codes="de el es fi fr hu ja nl ru zh"
+lang_codes="de el es fi fr hu ja nl ru cmn"
 langs="german greek spanish finnish french hungarian japanese dutch russian chinese"
 
 log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CSS10'

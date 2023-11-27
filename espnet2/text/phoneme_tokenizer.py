@@ -37,6 +37,16 @@ g2p_choices = [
     "espeak_ng_italian",
     "espeak_ng_ukrainian",
     "espeak_ng_polish",
+    "espeak_ng_mandarin",
+    "espeak_ng_japanese",
+    "espeak_ng_korean",
+    "espeak_ng_icelandic",
+    "espeak_ng_telugu",
+    "espeak_ng_tamil",
+    "espeak_ng_kannada",
+    "espeak_ng_marathi",
+    "espeak_ng_gujarati",
+    "espeak_ng_bengali",
     "g2pk",
     "g2pk_no_space",
     "g2pk_explicit_space",
@@ -475,6 +485,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_french":
             self.g2p = Phonemizer(
@@ -482,6 +496,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_spanish":
             self.g2p = Phonemizer(
@@ -489,6 +507,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_russian":
             self.g2p = Phonemizer(
@@ -496,6 +518,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_greek":
             self.g2p = Phonemizer(
@@ -503,6 +529,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_finnish":
             self.g2p = Phonemizer(
@@ -510,6 +540,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_hungarian":
             self.g2p = Phonemizer(
@@ -517,6 +551,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_dutch":
             self.g2p = Phonemizer(
@@ -524,6 +562,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_hindi":
             self.g2p = Phonemizer(
@@ -531,6 +573,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_italian":
             self.g2p = Phonemizer(
@@ -538,6 +584,10 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "espeak_ng_polish":
             self.g2p = Phonemizer(
@@ -545,6 +595,120 @@ class PhonemeTokenizer(AbsTokenizer):
                 backend="espeak",
                 with_stress=True,
                 preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_mandarin":
+            self.g2p = Phonemizer(
+                language="cmn",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_japanese":
+            self.g2p = Phonemizer(
+                language="ja",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_korean":
+            self.g2p = Phonemizer(
+                language="ko",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_icelandic":
+            self.g2p = Phonemizer(
+                language="is",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_telugu":
+            self.g2p = Phonemizer(
+                language="te",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_tamil":
+            self.g2p = Phonemizer(
+                language="ta",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_kannada":
+            self.g2p = Phonemizer(
+                language="kn",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_marathi":
+            self.g2p = Phonemizer(
+                language="mr",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_gujarati":
+            self.g2p = Phonemizer(
+                language="gu",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
+            )
+        elif g2p_type == "espeak_ng_bengali":
+            self.g2p = Phonemizer(
+                language="bn",
+                backend="espeak",
+                with_stress=True,
+                preserve_punctuation=True,
+                strip=True,
+                word_separator=" ",
+                phone_separator="",
+                split_by_single_token=True,
             )
         elif g2p_type == "g2pk":
             self.g2p = G2pk(no_space=False)

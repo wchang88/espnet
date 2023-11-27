@@ -13,7 +13,7 @@ LANG_TO_CODE = {
    "japanese": "ja",
    "dutch": "nl",
    "russian": "ru",
-   "chinese": "zh"
+   "chinese": "cmn"
 }
 
 LANG_TO_G2P = {
@@ -26,7 +26,7 @@ LANG_TO_G2P = {
    "japanese": "espeak_ng_japanese", # TODO: add g2p to espnet2/text/phoneme_tokenizer.py
    "dutch": "espeak_ng_dutch",
    "russian": "espeak_ng_russian",
-   "chinese": "espeak_ng_chinese" # TODO: add g2p to espnet2/text/phoneme_tokenizer.py
+   "chinese": "espeak_ng_mandarin" # TODO: add g2p to espnet2/text/phoneme_tokenizer.py
 }
 
 LANG_TO_SPEAKER = {
