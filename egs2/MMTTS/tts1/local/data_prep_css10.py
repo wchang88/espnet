@@ -64,7 +64,7 @@ def prepare_data_files(downloads_dir, data_dir):
    ) as wav_scp_f, open(
       os.path.join(data_dir, 'utt2spk'), 'w', encoding="utf-8"
    ) as utt2spk_f, open(
-      os.path.join(data_dir, 'spk2utt', 'w', encoding="utf-8")
+      os.path.join(data_dir, 'spk2utt'), 'w', encoding="utf-8"
    ) as spk2utt_f:
       for line in transcripts_f:
          audio_f, transcript, _ = line.strip().split("|")
