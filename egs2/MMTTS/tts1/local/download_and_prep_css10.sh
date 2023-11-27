@@ -105,7 +105,7 @@ for lang in ${langs}; do
    pyscripts/utils/convert_text_to_phn.py \
       --g2p "${g2p}" --nj "${nj}" \
       "data/${lang}/text" "data/${lang}_phn/text"
-   utils/fix_data_dir.sh "${DATA_DIR}"/"${lang}"_phn
+   utils/fix_data_dir.sh "data/${lang}_phn"
 done
 
 # log "stage 3: utils/subset_data_dir.sh"
