@@ -68,9 +68,9 @@ def prepare_data_files(downloads_dir, data_dir):
    ) as spk2utt_f:
       for line in transcripts_f:
          audio_f, _, transcript, _ = line.strip().split("|")
-         uttid = dataset + "_" + lang_code + "_" + audio_f.split("/")[-1]
+         uttid = dataset + "_" + lang_code + "_" + audio_f.split("/")[-1].split(".")[0]
 
-         wav_scp_f.write(f"{spkid}-{uttid} {audio_f}\n")
+         wav_scp_f.write(f"{spkid}-{uttid} {os.path.join(downloads_dir, audio_f)}\n")
          text_f.write(f"{spkid}-{uttid} {transcript.strip()}\n")
          utt2spk_f.write(f"{spkid}-{uttid} {spkid}\n") 
          spk2utt_f.write(f"{spkid} {spkid}-{uttid}\n")
