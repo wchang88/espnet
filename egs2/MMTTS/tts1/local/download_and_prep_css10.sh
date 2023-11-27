@@ -70,20 +70,19 @@ echo CSS10="${BASE_DIR}"/"${DOWNLOADS_DIR}" >> db.sh
 
 cd "${BASE_DIR}"
 
-log "stage 1: scripts/audio/trim_silence.sh"
-for lang in ${langs}; do
-   # shellcheck disable=SC2154
-   scripts/audio/trim_silence.sh \
-      --cmd "${train_cmd}" \
-      --nj "${nj}" \
-      --fs 22050 \
-      --win_length 1024 \
-      --shift_length 256 \
-      --threshold "${threshold}" \
-      "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"/log
-done
+# log "stage 1: scripts/audio/trim_silence.sh"
+# for lang in ${langs}; do
+#    # shellcheck disable=SC2154
+#    scripts/audio/trim_silence.sh \
+#       --cmd "${train_cmd}" \
+#       --nj "${nj}" \
+#       --fs 22050 \
+#       --win_length 1024 \
+#       --shift_length 256 \
+#       --threshold "${threshold}" \
+#       "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"/log
+# done
 
-)
 
 log "stage 2: pyscripts/utils/convert_text_to_phn.py"
 # define g2p dict
@@ -98,6 +97,7 @@ declare -A g2p_dict=(
    ["dutch"]="espeak_ng_dutch"
    ["russian"]="espeak_ng_russian"
    ["chinese"]="espeak_ng_mandarin"
+)
 
 for lang in ${langs}; do
    g2p=${g2p_dict[${lang}]}
