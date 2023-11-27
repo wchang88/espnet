@@ -42,7 +42,7 @@ log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CSS10'
 log "if download fails, please make sure you follow Kaggle's documentation to setup an access token to access the API"
 
 DOWNLOADS_DIR=downloads/css10
-DATA_DIR=data/css10
+DATA_DIR=data
 mkdir -p "${DOWNLOADS_DIR}" "${DATA_DIR}"
 
 for lang in ${langs}; do
@@ -104,7 +104,7 @@ for lang in ${langs}; do
    utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
    pyscripts/utils/convert_text_to_phn.py \
       --g2p "${g2p}" --nj "${nj}" \
-      "${DATA_DIR}"/"${lang}"/text "${DATA_DIR}"/"${lang}"_phn/text
+      "data/${lang}/text" "data/${lang}_phn/text"
    utils/fix_data_dir.sh "${DATA_DIR}"/"${lang}"_phn
 done
 
