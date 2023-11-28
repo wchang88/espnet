@@ -43,7 +43,7 @@ def prepare_data_files(downloads_dir, data_dir):
          with open(transcripts_file, 'r', encoding="utf-8") as transcripts_f:
             for line in transcripts_f:
                parts = line.strip().split("\t")
-               audio_f, _, transcript, _, bad_recording = parts[:4]
+               audio_f, _, transcript, _, bad_recording = parts[:5]
                if bad_recording == '0':
                   uttid = dataset + "_" + lang_code + "_" + audio_f
 
