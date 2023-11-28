@@ -37,7 +37,7 @@ BASE_DIR=$(pwd)
 lang_codes="hi te ta kn mr gu bn"
 langs="hindi telugu tamil kannada marathi gujarati bengali"
 spkrs="hin_ab tel_ss tam_sdr kan_plv mar_slp guj_dp ben_rm"
-langs_spkrs = "hindi:hin_ab telugu:tel_ss tamil:tam_sdr kannada:kan_plv marathi:mar_slp gujarati:guj_dp bengali:ben_rm"
+langs_spkrs="hindi:hin_ab telugu:tel_ss tamil:tam_sdr kannada:kan_plv marathi:mar_slp gujarati:guj_dp bengali:ben_rm"
 
 log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CMU INDIC'
 
