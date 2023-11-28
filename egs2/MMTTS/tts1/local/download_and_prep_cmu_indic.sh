@@ -49,7 +49,7 @@ for lang_spkr in ${langs_spkrs}; do
    IFS=: read -r lang spkr <<< lang_spkr
    if [ ! -e "${DOWNLOADS_DIR}"/"${lang}".done ]; then
       # download data
-      log Downloading "${lang}" speech data...
+      log Downloading "${lang}" speech data from speaker "${spkr}"...
       mkdir -p "${DOWNLOADS_DIR}"/"${lang}"
       wget http://festvox.org/h2r_indic/cmu_indic_${spkr}.tar.bz2
       tar -xf cmu_indic_${spkr}.tar.bz2 --directory "${DOWNLOADS_DIR}"/"${lang}"
