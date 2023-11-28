@@ -31,3 +31,31 @@ local/download_and_prep_talromur.sh
 
 # log "\t0.4: Downloading CML-TTS dataset and prepping"
 # local/download_and_prep_cmltts.sh
+
+log "Stage 1: Partition train/dev/test per lang and merge"
+train_set=train
+dev_set=dev
+eval_set=test
+suffix=""
+text_format=phn
+if [ "${text_format}" = phn ]; then
+   suffix="_phn"
+fi
+combine_train_dirs=()
+combine_dev_dirs=()
+combine_eval_dirs=()
+for lang in ${langs}; do
+   utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
+   utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
+   utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
+   utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
+   utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
+      "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
+   utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
+   combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
+   combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
+   combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
+done
+utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
+utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
+utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"

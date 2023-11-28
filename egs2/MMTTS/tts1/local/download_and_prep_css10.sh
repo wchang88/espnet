@@ -35,8 +35,7 @@ fi
 BASE_DIR=$(pwd)
 
 lang_codes="de el es fi fr hu ja nl ru cmn"
-# langs="german greek spanish finnish french hungarian japanese dutch russian chinese"
-langs="german"
+langs="german greek spanish finnish french hungarian japanese dutch russian chinese"
 
 log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CSS10'
 log "if download fails, please make sure you follow Kaggle's documentation to setup an access token to access the API"
@@ -70,18 +69,18 @@ echo CSS10="${BASE_DIR}"/"${DOWNLOADS_DIR}" >> db.sh
 
 cd "${BASE_DIR}"
 
-# log "stage 1: scripts/audio/trim_silence.sh"
-# for lang in ${langs}; do
-#    # shellcheck disable=SC2154
-#    scripts/audio/trim_silence.sh \
-#       --cmd "${train_cmd}" \
-#       --nj "${nj}" \
-#       --fs 22050 \
-#       --win_length 1024 \
-#       --shift_length 256 \
-#       --threshold "${threshold}" \
-#       "data/${lang}" "data/${lang}/log"
-# done
+log "stage 1: scripts/audio/trim_silence.sh"
+for lang in ${langs}; do
+   # shellcheck disable=SC2154
+   scripts/audio/trim_silence.sh \
+      --cmd "${train_cmd}" \
+      --nj "${nj}" \
+      --fs 22050 \
+      --win_length 1024 \
+      --shift_length 256 \
+      --threshold "${threshold}" \
+      "data/${lang}" "data/${lang}/log"
+done
 
 
 log "stage 2: pyscripts/utils/convert_text_to_phn.py"
@@ -107,34 +106,6 @@ for lang in ${langs}; do
       "data/${lang}/text" "data/${lang}_phn/text"
    utils/fix_data_dir.sh "data/${lang}_phn"
 done
-
-log "stage 3: utils/subset_data_dir.sh"
-train_set=train
-dev_set=dev
-eval_set=test
-suffix=""
-text_format=phn
-if [ "${text_format}" = phn ]; then
-   suffix="_phn"
-fi
-combine_train_dirs=()
-combine_dev_dirs=()
-combine_eval_dirs=()
-for lang in ${langs}; do
-   utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
-   utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
-   utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
-   utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
-   utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
-      "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
-   utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
-   combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
-   combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
-   combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
-done
-utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
-utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
-utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"
 
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
