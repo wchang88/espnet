@@ -17,7 +17,7 @@ def get_args():
 
 def prepare_data_files(downloads_dir, data_dir):
    transcripts_file = os.path.join(downloads_dir, 'transcript.v.1.4.txt')
-   _, dataset, lang = downloads_dir.split("/")
+   _, dataset, lang, _ = downloads_dir.split("/")
    lang_code = LANG_TO_CODE[lang]
    spkid = dataset + "_" + lang_code
 
