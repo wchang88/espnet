@@ -60,10 +60,10 @@ for lang_spkr in ${langs_spkrs}; do
       log "${lang}" speech data already downloaded. Please manually check the "${DOWNLOADS_DIR}"/"${lang}" directory to make sure the data is there
    fi
 
-   # log Preparing "${lang}" data files
-   # mkdir -p "${DATA_DIR}"/"${lang}"
-   # python local/data_prep_cmuindic.py "${DOWNLOADS_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"
-   # log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
+   log Preparing "${lang}" data files
+   mkdir -p "${DATA_DIR}"/"${lang}"
+   python local/data_prep_cmu_indic.py "${DOWNLOADS_DIR}"/"${lang}"/cmu_indic_${spkr} "${DATA_DIR}"/"${lang}"
+   log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
 done
 
 log 'CMU_INDIC DOWNLOAD AND DATA PREPARATION COMPLETED'
