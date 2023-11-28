@@ -58,7 +58,7 @@ for lang in ${langs}; do
 
    log Preparing "${lang}" data files
    mkdir -p "${DATA_DIR}"/"${lang}"
-   python local/data_prep_kss.py "${DOWNLOADS_DIR}"/"${lang}"/kss "${DATA_DIR}"/"${lang}"
+   python local/data_prep_kss.py "${DOWNLOADS_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"
    log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
 done
 
