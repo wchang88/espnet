@@ -87,29 +87,26 @@ cd "${BASE_DIR}"
 # done
 
 
-# log "stage 2: pyscripts/utils/convert_text_to_phn.py"
-# # define g2p dict
-# declare -A g2p_dict=(
-#    ["german"]="espeak_ng_german"
-#    ["greek"]="espeak_ng_greek"
-#    ["spanish"]="espeak_ng_spanish"
-#    ["finnish"]="espeak_ng_finnish"
-#    ["french"]="espeak_ng_french"
-#    ["hungarian"]="espeak_ng_hungarian"
-#    ["japanese"]="espeak_ng_japanese"
-#    ["dutch"]="espeak_ng_dutch"
-#    ["russian"]="espeak_ng_russian"
-#    ["chinese"]="espeak_ng_mandarin"
-# )
+log "stage 2: pyscripts/utils/convert_text_to_phn.py"
+# define g2p dict
+declare -A g2p_dict=(
+   ["hindi"]="espeak_ng_hindi"
+   ["telugu"]="espeak_ng_telugu"
+   ["tamil"]="espeak_ng_tamil"
+   ["kannada"]="espeak_ng_kannada"
+   ["marathi"]="espeak_ng_marathi"
+   ["gujarati"]="espeak_ng_gujarati"
+   ["bengali"]="espeak_ng_bengali"
+)
 
-# for lang in ${langs}; do
-#    g2p=${g2p_dict[${lang}]}
-#    utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
-#    pyscripts/utils/convert_text_to_phn.py \
-#       --g2p "${g2p}" --nj "${nj}" \
-#       "data/${lang}/text" "data/${lang}_phn/text"
-#    utils/fix_data_dir.sh "data/${lang}_phn"
-# done
+for lang in ${langs}; do
+   g2p=${g2p_dict[${lang}]}
+   utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
+   pyscripts/utils/convert_text_to_phn.py \
+      --g2p "${g2p}" --nj "${nj}" \
+      "data/${lang}/text" "data/${lang}_phn/text"
+   utils/fix_data_dir.sh "data/${lang}_phn"
+done
 
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
