@@ -80,60 +80,61 @@ cd "${BASE_DIR}"
 #       --win_length 1024 \
 #       --shift_length 256 \
 #       --threshold "${threshold}" \
-#       "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"/log
+#       "data/${lang}" "data/${lang}/log"
 # done
 
 
-log "stage 2: pyscripts/utils/convert_text_to_phn.py"
-# define g2p dict
-declare -A g2p_dict=(
-   ["german"]="espeak_ng_german"
-   ["greek"]="espeak_ng_greek"
-   ["spanish"]="espeak_ng_spanish"
-   ["finnish"]="espeak_ng_finnish"
-   ["french"]="espeak_ng_french"
-   ["hungarian"]="espeak_ng_hungarian"
-   ["japanese"]="espeak_ng_japanese"
-   ["dutch"]="espeak_ng_dutch"
-   ["russian"]="espeak_ng_russian"
-   ["chinese"]="espeak_ng_mandarin"
-)
+# log "stage 2: pyscripts/utils/convert_text_to_phn.py"
+# # define g2p dict
+# declare -A g2p_dict=(
+#    ["german"]="espeak_ng_german"
+#    ["greek"]="espeak_ng_greek"
+#    ["spanish"]="espeak_ng_spanish"
+#    ["finnish"]="espeak_ng_finnish"
+#    ["french"]="espeak_ng_french"
+#    ["hungarian"]="espeak_ng_hungarian"
+#    ["japanese"]="espeak_ng_japanese"
+#    ["dutch"]="espeak_ng_dutch"
+#    ["russian"]="espeak_ng_russian"
+#    ["chinese"]="espeak_ng_mandarin"
+# )
 
-for lang in ${langs}; do
-   g2p=${g2p_dict[${lang}]}
-   utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
-   pyscripts/utils/convert_text_to_phn.py \
-      --g2p "${g2p}" --nj "${nj}" \
-      "data/${lang}/text" "data/${lang}_phn/text"
-   utils/fix_data_dir.sh "data/${lang}_phn"
-done
-
-# log "stage 3: utils/subset_data_dir.sh"
-# train_set=tr_no_dev
-# dev_set=dev
-# eval_set=eval1
-# suffix=""
-# if [ "${text_format}" = phn ]; then
-#    suffix="_phn"
-# fi
-# combine_train_dirs=()
-# combine_dev_dirs=()
-# combine_eval_dirs=()
 # for lang in ${langs}; do
-#    utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
-#    utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
-#    utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
-#    utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
-#    utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
-#       "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
-#    utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
-#    combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
-#    combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
-#    combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
+#    g2p=${g2p_dict[${lang}]}
+#    utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
+#    pyscripts/utils/convert_text_to_phn.py \
+#       --g2p "${g2p}" --nj "${nj}" \
+#       "data/${lang}/text" "data/${lang}_phn/text"
+#    utils/fix_data_dir.sh "data/${lang}_phn"
 # done
-# utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
-# utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
-# utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"
+
+log "stage 3: utils/subset_data_dir.sh"
+train_set=train
+dev_set=dev
+eval_set=test
+suffix=""
+text_format=phn
+if [ "${text_format}" = phn ]; then
+   suffix="_phn"
+fi
+combine_train_dirs=()
+combine_dev_dirs=()
+combine_eval_dirs=()
+for lang in ${langs}; do
+   utils/subset_data_dir.sh "data/${lang}${suffix}" 100 "data/${lang}_deveval${suffix}"
+   utils/subset_data_dir.sh --first "data/${lang}_deveval${suffix}" 50 "data/${lang}_${dev_set}${suffix}"
+   utils/subset_data_dir.sh --last "data/${lang}_deveval${suffix}" 50 "data/${lang}_${eval_set}${suffix}"
+   utils/copy_data_dir.sh "data/${lang}${suffix}" "data/${lang}_${train_set}${suffix}"
+   utils/filter_scp.pl --exclude "data/${lang}_deveval${suffix}/wav.scp" \
+      "data/${lang}${suffix}/wav.scp" > "data/${lang}_${train_set}${suffix}/wav.scp"
+   utils/fix_data_dir.sh "data/${lang}_${train_set}${suffix}"
+   combine_train_dirs+=("data/${lang}_${train_set}${suffix}")
+   combine_dev_dirs+=("data/${lang}_${dev_set}${suffix}")
+   combine_eval_dirs+=("data/${lang}_${eval_set}${suffix}")
+done
+utils/combine_data.sh "data/${train_set}${suffix}" "${combine_train_dirs[@]}"
+utils/combine_data.sh "data/${dev_set}${suffix}" "${combine_dev_dirs[@]}"
+utils/combine_data.sh "data/${eval_set}${suffix}" "${combine_eval_dirs[@]}"
 
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
