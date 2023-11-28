@@ -47,7 +47,7 @@ def prepare_data_files(downloads_dir, data_dir):
                if bad_recording == '0':
                   uttid = dataset + "_" + lang_code + "_" + audio_f
 
-                  wav_scp_f.write(f"{spkid}-{uttid} {os.path.join(downloads_dir, spkr, "audio", audio_f + "wav")}\n")
+                  wav_scp_f.write(f"{spkid}-{uttid} {os.path.join(downloads_dir, spkr, 'audio', audio_f + 'wav')}\n")
                   text_f.write(f"{spkid}-{uttid} {transcript.strip()}\n")
                   utt2spk_f.write(f"{spkid}-{uttid} {spkid}\n") 
                   spk2utt_f.write(f"{spkid} {spkid}-{uttid}\n")
