@@ -46,7 +46,7 @@ DATA_DIR=data
 mkdir -p "${DOWNLOADS_DIR}" "${DATA_DIR}"
 
 for lang_spkr in ${langs_spkrs}; do
-   IFS=: read -r lang spkr <<< lang_spkr
+   IFS=: read -r lang spkr <<< "${lang_spkr}"
    if [ ! -e "${DOWNLOADS_DIR}"/"${lang}".done ]; then
       # download data
       log Downloading "${lang}" speech data from speaker "${spkr}"...
