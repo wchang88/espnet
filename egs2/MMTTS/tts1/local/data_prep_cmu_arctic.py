@@ -50,6 +50,8 @@ def prepare_data_files(downloads_dir, data_dir):
                if line.startswith("arctic_a"):
                   # This is the a version of the arctic files
                   utt, transcript, _ = line.split('"')
+                  utt = utt.strip()
+                  transcript = transcript.strip()
                   uttid = dataset + "_" + lang_code + "_" + spkr + "_" + utt
                   audio_f = utt + ".wav"
 

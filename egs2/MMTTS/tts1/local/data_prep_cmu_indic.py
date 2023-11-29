@@ -64,6 +64,8 @@ def prepare_data_files(downloads_dir, data_dir):
          if line.startswith(valid_audiofile):
             # This is not an arctic audio file
             utt, transcript, _ = line.split('"')
+            utt = utt.strip()
+            transcript = transcript.strip()
             uttid = dataset + "_" + lang_code + "_" + utt
             audio_f = utt + ".wav"
 
