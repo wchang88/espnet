@@ -50,8 +50,8 @@ for spkr in ${spkrs}; do
       log Downloading "${lang}" speech data from speaker "${spkr}"...
       mkdir -p "${DOWNLOADS_DIR}"/"${lang}"/"${spkr}"
       wget http://festvox.org/cmu_arctic/cmu_arctic/packed/cmu_us_${spkr}_arctic-0.95-release.tar.bz2
-      tar xf cmu_us_${spk}*.tar.bz2 --directory "${DOWNLOADS_DIR}"/"${lang}"/"${spkr}"
-      rm cmu_us_${spk}*.tar.bz2
+      tar xf cmu_us_${spkr}*.tar.bz2 --directory "${DOWNLOADS_DIR}"/"${lang}"/"${spkr}"
+      rm cmu_us_${spkr}*.tar.bz2
       touch "${DOWNLOADS_DIR}"/"${lang}"_"${spkr}".done
       log Finished downloading "${lang}"_"${spkr}" speech data
    else
