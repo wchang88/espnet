@@ -40,7 +40,7 @@ def prepare_data_files(downloads_dir, data_dir):
       for spkr in SPKRS:
          transcripts_file = os.path.join(downloads_dir, spkr, f"cmu_us_{spkr}_arctic", 'etc', 'txt.done.data')
 
-         _, dataset, lang, _ = downloads_dir.split("/")
+         _, dataset, lang = downloads_dir.split("/")
          lang_code = LANG_TO_CODE[lang]
          spkid = dataset + "_" + lang_code + "_" + spkr
 
