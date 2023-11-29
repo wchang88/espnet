@@ -16,19 +16,6 @@ LANG_TO_CODE = {
    "chinese": "cmn"
 }
 
-LANG_TO_G2P = {
-   "german": "espeak_ng_german",
-   "greek": "espeak_ng_greek",
-   "spanish": "espeak_ng_spanish",
-   "finnish": "espeak_ng_finnish",
-   "french": "espeak_ng_french",
-   "hungarian": "espeak_ng_hungarian",
-   "japanese": "espeak_ng_japanese", # TODO: add g2p to espnet2/text/phoneme_tokenizer.py
-   "dutch": "espeak_ng_dutch",
-   "russian": "espeak_ng_russian",
-   "chinese": "espeak_ng_mandarin" # TODO: add g2p to espnet2/text/phoneme_tokenizer.py
-}
-
 LANG_TO_SPEAKER = {
    "german": "Hokuspokus",
    "greek": "Rapunzelina",
@@ -37,22 +24,22 @@ LANG_TO_SPEAKER = {
    "french": "GillesGLeBlanc",
    "hungarian": "DianaMajlinger",
    "japanese": "ekzemplaro", 
-   "dutch": " 	BartdeLeeuw",
+   "dutch": "BartdeLeeuw",
    "russian": "MarkChulsky",
    "chinese": "JingLi" 
 }
 
 SPKR_TO_GENDER = {
    "Hokuspokus": 'f',
-   "greek": "Rapunzelina",
-   "spanish": "Tux",
-   "finnish": "HarriTapaniYlilammi",
-   "french": "GillesGLeBlanc",
-   "hungarian": "DianaMajlinger",
-   "japanese": "ekzemplaro", 
-   "dutch": " 	BartdeLeeuw",
-   "russian": "MarkChulsky",
-   "chinese": "JingLi" 
+   "Rapunzelina": 'f',
+   "Tux": 'm',
+   "HarriTapaniYlilammi": 'm',
+   "GillesGLeBlanc": 'm',
+   "DianaMajlinger": 'f',
+   "ekzemplaro": 'm', 
+   "BartdeLeeuw": 'm',
+   "MarkChulsky": 'm',
+   "JingLi": 'f'
 }
 
 def get_args():
@@ -67,7 +54,6 @@ def prepare_data_files(downloads_dir, data_dir):
    transcripts_file = os.path.join(downloads_dir, 'transcript.txt')
    _, dataset, lang = downloads_dir.split("/")
    lang_code = LANG_TO_CODE[lang]
-   g2p = LANG_TO_G2P[lang]
    spkid = dataset + "_" + lang_code + "_" + LANG_TO_SPEAKER[lang]
 
    with open(transcripts_file, 'r', encoding="utf-8") as transcripts_f, open(
@@ -87,6 +73,9 @@ def prepare_data_files(downloads_dir, data_dir):
          text_f.write(f"{spkid}-{uttid} {transcript.strip()}\n")
          utt2spk_f.write(f"{spkid}-{uttid} {spkid}\n") 
          spk2utt_f.write(f"{spkid} {spkid}-{uttid}\n")
+
+   with open(os.path.join(data_dir, 'spk2gender'), 'w', encoding='utf-8') as spk2gender_f:
+      spk2gender_f.write(f"{dataset + '_' + lang_code + '_' + LANG_TO_SPEAKER[lang]} {SPKR_TO_GENDER[LANG_TO_SPEAKER[lang]]}")
 
 
 
