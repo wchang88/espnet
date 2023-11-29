@@ -74,14 +74,14 @@ cd "${BASE_DIR}"
 
 log "stage 1: scripts/audio/trim_silence.sh"
 # shellcheck disable=SC2154
-scripts/audio/trim_silence.sh \
-   --cmd "${train_cmd}" \
-   --nj "${nj}" \
-   --fs 22050 \
-   --win_length 1024 \
-   --shift_length 256 \
-   --threshold "${threshold}" \
-   "data/${lang}" "data/${lang}/log"
+# scripts/audio/trim_silence.sh \
+#    --cmd "${train_cmd}" \
+#    --nj "${nj}" \
+#    --fs 22050 \
+#    --win_length 1024 \
+#    --shift_length 256 \
+#    --threshold "${threshold}" \
+#    "data/${lang}" "data/${lang}/log"
 
 
 log "stage 2: pyscripts/utils/convert_text_to_phn.py"
