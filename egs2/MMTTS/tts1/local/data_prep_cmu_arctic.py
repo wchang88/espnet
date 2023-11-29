@@ -58,6 +58,10 @@ def prepare_data_files(downloads_dir, data_dir):
                   utt2spk_f.write(f"{spkid}-{uttid} {spkid}\n") 
                   spk2utt_f.write(f"{spkid} {spkid}-{uttid}\n")
 
+   with open(os.path.join(data_dir, 'spk2gender'), 'w', encoding="utf-8") as spk2gender:
+      for spkr in SPKRS_TO_GENDER:
+         spk2gender.write(f"{dataset + "_" + lang_code + "_" + spkr} {SPKRS_TO_GENDER[spkr]}\n")
+
 
 
 if __name__ == "__main__":
