@@ -10,6 +10,7 @@ log() {
 }
 SECONDS=0
 
+langs="german greek spanish finnish french hungarian japanese dutch russian chinese hindi telugu tamil kannada marathi gujarati bengali english korean icelandic"
 
 log "Stage 0: Download data and preliminary data prep..."
 
@@ -29,8 +30,6 @@ local/download_and_prep_kss.sh
 log "\t0.5: Downloading Talromur2 dataset and prepping"
 local/download_and_prep_talromur.sh
 
-# log "\t0.4: Downloading CML-TTS dataset and prepping"
-# local/download_and_prep_cmltts.sh
 
 log "Stage 1: Partition train/dev/test per lang and merge"
 train_set=train
