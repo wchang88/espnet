@@ -73,17 +73,15 @@ echo CMU_ARCTIC="${BASE_DIR}"/"${DOWNLOADS_DIR}" >> db.sh
 cd "${BASE_DIR}"
 
 log "stage 1: scripts/audio/trim_silence.sh"
-for lang in ${langs}; do
-   # shellcheck disable=SC2154
-   scripts/audio/trim_silence.sh \
-      --cmd "${train_cmd}" \
-      --nj "${nj}" \
-      --fs 22050 \
-      --win_length 1024 \
-      --shift_length 256 \
-      --threshold "${threshold}" \
-      "data/${lang}" "data/${lang}/log"
-done
+# shellcheck disable=SC2154
+scripts/audio/trim_silence.sh \
+   --cmd "${train_cmd}" \
+   --nj "${nj}" \
+   --fs 22050 \
+   --win_length 1024 \
+   --shift_length 256 \
+   --threshold "${threshold}" \
+   "data/${lang}" "data/${lang}/log"
 
 
 log "stage 2: pyscripts/utils/convert_text_to_phn.py"
@@ -92,14 +90,12 @@ declare -A g2p_dict=(
    ["english"]="espeak_ng_english_us_vits"
 )
 
-for lang in ${langs}; do
-   g2p=${g2p_dict[${lang}]}
-   utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
-   pyscripts/utils/convert_text_to_phn.py \
-      --g2p "${g2p}" --nj "${nj}" \
-      "data/${lang}/text" "data/${lang}_phn/text"
-   utils/fix_data_dir.sh "data/${lang}_phn"
-done
+g2p=${g2p_dict[${lang}]}
+utils/copy_data_dir.sh "${DATA_DIR}"/"${lang}" "${DATA_DIR}"/"${lang}"_phn
+pyscripts/utils/convert_text_to_phn.py \
+   --g2p "${g2p}" --nj "${nj}" \
+   "data/${lang}/text" "data/${lang}_phn/text"
+utils/fix_data_dir.sh "data/${lang}_phn"
 
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
