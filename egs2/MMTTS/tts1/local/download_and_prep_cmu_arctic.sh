@@ -61,7 +61,7 @@ done
 
 log Preparing "${lang}" data files
 mkdir -p "${DATA_DIR}"/"${lang}"
-python local/data_prep_cmu_indic.py "${DOWNLOADS_DIR}"/"${lang}"/cmu_indic_${spkr} "${DATA_DIR}"/"${lang}"
+python local/data_prep_cmu_arctic.py "${DOWNLOADS_DIR}"/"${lang}"/cmu_indic_${spkr} "${DATA_DIR}"/"${lang}"
 log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
 
 
