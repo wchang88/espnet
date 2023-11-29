@@ -44,6 +44,9 @@ def prepare_data_files(downloads_dir, data_dir):
             for line in transcripts_f:
                parts = line.strip().split("\t")
                audio_f, _, transcript, _, bad_recording = parts[:5]
+               transcript = transcript.strip()
+               if len(transcript) == 0:
+                  continue
                if bad_recording == '0':
                   uttid = dataset + "_" + lang_code + "_" + audio_f
 

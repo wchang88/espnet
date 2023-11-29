@@ -32,6 +32,8 @@ def prepare_data_files(downloads_dir, data_dir):
    ) as spk2utt_f:
       for line in transcripts_f:
          audio_f, _, transcript, _, _, _ = line.strip().split("|")
+         if len(transcript) == 0:
+            continue
          uttid = dataset + "_" + lang_code + "_" + audio_f.split("/")[-1].split(".")[0]
 
          wav_scp_f.write(f"{spkid}-{uttid} {os.path.join(downloads_dir, 'kss', audio_f)}\n")

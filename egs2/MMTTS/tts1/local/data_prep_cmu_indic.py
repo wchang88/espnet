@@ -66,6 +66,8 @@ def prepare_data_files(downloads_dir, data_dir):
             utt, transcript, _ = line.split('"')
             utt = utt.strip()
             transcript = transcript.strip()
+            if len(transcript) == 0:
+               continue
             uttid = dataset + "_" + lang_code + "_" + utt
             audio_f = utt + ".wav"
 
