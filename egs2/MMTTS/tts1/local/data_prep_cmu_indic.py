@@ -72,6 +72,8 @@ def prepare_data_files(downloads_dir, data_dir):
             utt2spk_f.write(f"{spkid}-{uttid} {spkid}\n") 
             spk2utt_f.write(f"{spkid} {spkid}-{uttid}\n")
 
+   with open(os.path.join(data_dir, 'spk2gender'), 'w', encoding="utf-8") as spk2gender_f:
+      spk2gender_f.write(f"{dataset + '_' + lang_code + '_' + LANG_TO_SPEAKER[lang]} f")
 
 
 if __name__ == "__main__":

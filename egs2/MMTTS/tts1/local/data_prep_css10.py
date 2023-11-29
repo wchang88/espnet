@@ -42,6 +42,19 @@ LANG_TO_SPEAKER = {
    "chinese": "JingLi" 
 }
 
+SPKR_TO_GENDER = {
+   "Hokuspokus": 'f',
+   "greek": "Rapunzelina",
+   "spanish": "Tux",
+   "finnish": "HarriTapaniYlilammi",
+   "french": "GillesGLeBlanc",
+   "hungarian": "DianaMajlinger",
+   "japanese": "ekzemplaro", 
+   "dutch": " 	BartdeLeeuw",
+   "russian": "MarkChulsky",
+   "chinese": "JingLi" 
+}
+
 def get_args():
    parser = argparse.ArgumentParser()
    parser.add_argument("downloads_dir", type=str) # downloads data directory, ex: downloads/css10/german
