@@ -34,8 +34,8 @@ fi
 
 BASE_DIR=$(pwd)
 
-lang_codes="us-en"
-langs="english"
+lang_code="us-en"
+lang="english"
 spkrs="slt clb bdl rms jmk awb ksp"
 
 log 'STARTING DOWNLOAD AND DATA PREPARATION FOR CMU ARCTIC'
