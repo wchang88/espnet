@@ -66,7 +66,7 @@ for lang_spkr in ${langs_spkrs}; do
    log Finished preparing "${lang}" data files in "${DATA_DIR}"/"${lang}"
 done
 
-log 'CMU_INDIC DOWNLOAD AND DATA PREPARATION COMPLETED'
+log 'CMU INDIC DOWNLOAD AND DATA PREPARATION COMPLETED'
 touch downloads/cmu_indic.done
 echo "" >> db.sh
 echo CMU_INDIC="${BASE_DIR}"/"${DOWNLOADS_DIR}" >> db.sh
